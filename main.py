@@ -1,7 +1,7 @@
 import sys
 import argparse
 import pyperclip
-import minesweeper
+import minesweeper as m
 
 DEFAULT_DIMENSIONS = [9, 9] # width, height
 DEFAULT_MINES = 10
@@ -33,7 +33,10 @@ def print_and_quit(message):
 
 def main():    
     if __name__ == "__main__":
-        print("helo")
+        b = m.Board(7, 7)
+        b.add_mine(1, 1)
+        b.add_mine(1, 3)
+        print(str(b))
     
     else:
         print_and_quit("Run this as a script please")
