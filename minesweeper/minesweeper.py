@@ -3,8 +3,11 @@ import random
 # Boards are generated basically at random. No checking is done other than to
 # ensure the center is free of mines.
 
+
 MIN_DIMENSIONS = (7, 7)
 MIN_MINES = 5
+NUMBER_EMOJI_CODES = ["one", "two", "three", "four", "five", "six", "seven", "eight"]
+
 
 # Representation of a minesweeper board.
 # -1 is a mine, 0 to 8 is the number of mine cells surrounding that cell.
@@ -43,10 +46,10 @@ class Board:
             rows.append(row)
         return "\n".join(rows)
 
+
 # Generates a board with mines.
 # Automatically places a safe spot in the center.
 def generate_board(width, height, mine_count):
-    
     # Value handling
     width = max(width, MIN_DIMENSIONS[0])
     if width % 2 == 0: width += 1
@@ -76,5 +79,26 @@ def generate_board(width, height, mine_count):
             board.add_mine(x, y)
         n += 1
     
+    print(f"Generated a {width} by {height} board with {mine_count} mines")
+    
     return board
 
+
+# Given a board, returns a string representation of it in Discord Markdown format.
+def board_to_discord_string(board, blank_emoji, mine_emoji):
+    string_parts = []
+    
+    for y in range(board.height):
+        row_string = ""
+        for x in range(board.width):
+            i = board.grid[y][x]
+            if i == -1:
+                row_string += f"||:{mine_emoji}:||"
+            elif i == 0:
+                row_string += f"||:{blank_emoji}:||"
+            else:
+                row_string += f"||:{NUMBER_EMOJI_CODES[i - 1]}:||"
+        
+        string_parts.append(row_string)
+    
+    return "\n".join(string_parts)
