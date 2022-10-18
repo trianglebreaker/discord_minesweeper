@@ -3,7 +3,7 @@ import argparse
 import pyperclip
 import minesweeper as m
 
-DEFAULT_DIMENSIONS = [9, 9] # width, height
+DEFAULT_DIMENSIONS = (9, 9) # width, height
 DEFAULT_MINES = 10
 DEFAULT_BLANK_EMOJI = "white_large_square"
 DEFAULT_MINE_EMOJI = "boom"
@@ -33,10 +33,7 @@ def print_and_quit(message):
 
 def main():    
     if __name__ == "__main__":
-        b = m.Board(7, 7)
-        b.add_mine(1, 1)
-        b.add_mine(1, 3)
-        print(str(b))
+        print(str(m.generate_board(9, 9, 10)))
     
     else:
         print_and_quit("Run this as a script please")

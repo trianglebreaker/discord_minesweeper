@@ -1,5 +1,10 @@
+import random
+
 # Boards are generated basically at random. No checking is done other than to
 # ensure the center is free of mines.
+
+MIN_DIMENSIONS = (7, 7)
+MIN_MINES = 5
 
 # Representation of a minesweeper board.
 # -1 is a mine, 0 to 8 is the number of mine cells surrounding that cell.
@@ -27,7 +32,6 @@ class Board:
             if self.grid[i[1]][i[0]] != -1: self.grid[i[1]][i[0]] += 1
         self.mines += 1
     
-    # I'm not using this in the real thing anyway
     def __str__(self):
         rows = []
         for y in range(self.height):
@@ -39,7 +43,38 @@ class Board:
             rows.append(row)
         return "\n".join(rows)
 
-def generate_board():
-    return
-
+# Generates a board with mines.
+# Automatically places a safe spot in the center.
+def generate_board(width, height, mine_count):
+    
+    # Value handling
+    width = max(width, MIN_DIMENSIONS[0])
+    if width % 2 == 0: width += 1
+    height = max(height, MIN_DIMENSIONS[0])
+    if height % 2 == 0: height += 1
+    # maybe there's a better way, but 50% mine density seems easiest
+    mine_count = max(min(mine_count, (width * height - 9) // 2), MIN_MINES)
+    
+    board = Board(width, height)
+    
+    # maybe I could change the safe coordinate spot to be random in the future.
+    # but for now it will always be in the center
+    start_cell_coords = (width // 2, height // 2)
+    safe_cell_range = (start_cell_coords[0] - 1, start_cell_coords[0] + 1, start_cell_coords[1] - 1, start_cell_coords[1] + 1) # min x, max x, min y, max y
+    
+    mines = random.sample(range(width * height - 9), mine_count)
+    mines = dict.fromkeys(mines)
+    
+    n = 0
+    for i in range(width * height):
+        x = i % width
+        y = i // height
+        
+        if x >= safe_cell_range[0] and x <= safe_cell_range[1] and y >= safe_cell_range[2] and y <= safe_cell_range[3]: continue
+        
+        if n in mines:
+            board.add_mine(x, y)
+        n += 1
+    
+    return board
 
