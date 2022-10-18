@@ -26,12 +26,12 @@ parser.add_argument("-m", "-mines", nargs = 1, type = int, metavar = "mines", he
 parser.add_argument("-be", "-blank-emoji", nargs = 1, type = str, metavar = "blank_emoji_name", help = f"set custom emoji code for blank squares (default = \"{DEFAULT_BLANK_EMOJI}\")", default = [DEFAULT_BLANK_EMOJI])
 parser.add_argument("-me", "-mine-emoji", nargs = 1, type = str, metavar = "mine_emoji_name", help = f"set custom emoji code for mines (default = \"{DEFAULT_MINE_EMOJI}\")", default = [DEFAULT_MINE_EMOJI])
 args = parser.parse_args()
-print(args)
 
 
 def print_and_quit(message):
     print(message)
     quit()
+
 
 def main():    
     if __name__ == "__main__":
