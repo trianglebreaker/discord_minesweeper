@@ -53,7 +53,7 @@ def generate_board(width, height, mine_count):
     # Value handling
     width = max(width, MIN_DIMENSIONS[0])
     if width % 2 == 0: width += 1
-    height = max(height, MIN_DIMENSIONS[0])
+    height = max(height, MIN_DIMENSIONS[1])
     if height % 2 == 0: height += 1
     # maybe there's a better way, but 50% mine density seems easiest
     mine_count = max(min(mine_count, (width * height - 9) // 2), MIN_MINES)
@@ -71,7 +71,7 @@ def generate_board(width, height, mine_count):
     n = 0
     for i in range(width * height):
         x = i % width
-        y = i // height
+        y = i // width
         
         if x >= safe_cell_range[0] and x <= safe_cell_range[1] and y >= safe_cell_range[2] and y <= safe_cell_range[3]: continue
         
